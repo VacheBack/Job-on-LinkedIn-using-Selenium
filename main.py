@@ -1,10 +1,13 @@
+import os
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from dotenv import load_dotenv
 import time
 
-ACCOUNT_EMAIL = "grigoryanvache10.01@yahoo.com"
-ACCOUNT_PASSWORD = "Vachebest123-"
-LOCATION = "Yerevan, Yerevan, Armenia"
+load_dotenv()
+ACCOUNTS_EMAIL = os.getenv("ACCOUNT_EMAIL")
+ACCOUNTS_PASSWORD = os.getenv("ACCOUNT_PASSWORD")
+
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options=chrome_options)
@@ -15,15 +18,15 @@ time.sleep(2)
 reject_button = driver.find_element(By.XPATH, value='//*[@id="artdeco-global-alert-container"]/div/section/div/div[2]/button[2]')
 reject_button.click()
 
-time.sleep(2)
+time.sleep(4)
 signin_button = driver.find_element(By.XPATH, value="/html/body/div[1]/header/nav/div/a[2]")
 signin_button.click()
 
-email = driver.find_element(By.ID, value="username")
-email.send_keys(ACCOUNT_EMAIL)
+email = driver.find_element(By.XPATH, value='//*[@id="username"]')
+email.send_keys(ACCOUNTS_EMAIL)
 
 email = driver.find_element(By.ID, value="password")
-email.send_keys(ACCOUNT_PASSWORD)
+email.send_keys(ACCOUNTS_PASSWORD)
 
 signin_button1 = driver.find_element(By.XPATH, value='//*[@id="organic-div"]/form/div[3]/button')
 # XPATH always get changed, so we can use "contain(text(), 'The text') function in value to find the exact XPATH"
